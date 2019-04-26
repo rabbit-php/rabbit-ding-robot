@@ -2,12 +2,14 @@
 
 namespace rabbit\ding\robot;
 
+use Exception;
 use rabbit\ding\robot\Messages\ActionCard;
 use rabbit\ding\robot\Messages\FeedCard;
 use rabbit\ding\robot\Messages\Link;
 use rabbit\ding\robot\Messages\Markdown;
 use rabbit\ding\robot\Messages\Message;
 use rabbit\ding\robot\Messages\Text;
+use rabbit\helper\CoroHelper;
 use rabbit\httpclient\Client;
 
 /**
@@ -153,24 +155,26 @@ class DingTalkService
     }
 
     /**
-     * @return string
+     * @throws Exception
      */
-    public function send(): string
+    public function send(): void
     {
         if (!$this->config['enabled']) {
             return false;
         }
 
-        $request = $this->client->post($this->getRobotUrl(), [
-            'body' => json_encode($this->message->getBody()),
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'timeout' => $this->config['timeout'] ?? 2.0,
-        ]);
+        CoroHelper::go(function () {
+            $request = $this->client->post($this->getRobotUrl(), [
+                'body' => json_encode($this->message->getBody()),
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'timeout' => $this->config['timeout'] ?? 2.0,
+            ]);
 
-        $result = (string)$request->getBody();
-        return $result;
+            $result = (string)$request->getBody();
+            return $result;
+        });
     }
 
     /**

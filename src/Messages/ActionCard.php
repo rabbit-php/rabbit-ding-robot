@@ -74,12 +74,12 @@ class ActionCard extends Message
     }
 
     /**
-     * @return string
+     *
      */
-    public function send(): string
+    public function send(): void
     {
         $this->service->setMessage($this);
-        return $this->service->send();
+        $this->service->send();
     }
 
 }

@@ -51,9 +51,9 @@ class DingTalk
      * @param string $content
      * @return string
      */
-    public function text(string $content = ''): string
+    public function text(string $content = ''): void
     {
-        return $this->dingTalkService
+        $this->dingTalkService
             ->setTextMessage($content)
             ->send();
     }
@@ -86,11 +86,10 @@ class DingTalk
      * @param string $text
      * @param string $url
      * @param string $picUrl
-     * @return string
      */
-    public function link(string $title, string $text, string $url, string $picUrl = ''): string
+    public function link(string $title, string $text, string $url, string $picUrl = ''): void
     {
-        return $this->dingTalkService
+        $this->dingTalkService
             ->setLinkMessage($title, $text, $url, $picUrl)
             ->send();
     }
@@ -98,11 +97,10 @@ class DingTalk
     /**
      * @param string $title
      * @param string $markdown
-     * @return string
      */
-    public function markdown(string $title, string $markdown): string
+    public function markdown(string $title, string $markdown): void
     {
-        return $this->dingTalkService
+        $this->dingTalkService
             ->setMarkdownMessage($title, $markdown)
             ->send();
     }

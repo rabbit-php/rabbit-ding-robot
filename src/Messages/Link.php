@@ -14,9 +14,9 @@ class Link extends Message
      * @param string $messageUrl
      * @param string $picUrl
      */
-    public function __construct(string $title,string $text,string $messageUrl,string $picUrl = '')
+    public function __construct(string $title, string $text, string $messageUrl, string $picUrl = '')
     {
-        $this->setMessage($title,$text,$messageUrl,$picUrl);
+        $this->setMessage($title, $text, $messageUrl, $picUrl);
     }
 
     /**
@@ -25,8 +25,9 @@ class Link extends Message
      * @param string $messageUrl
      * @param string $picUrl
      */
-    public function setMessage(string $title,string $text,string $messageUrl,string $picUrl = ''){
-        $this->message  = [
+    public function setMessage(string $title, string $text, string $messageUrl, string $picUrl = '')
+    {
+        $this->message = [
             'msgtype' => 'link',
             'link' => [
                 'text' => $text,

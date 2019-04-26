@@ -12,17 +12,18 @@ class Markdown extends Message
      * @param $title
      * @param $markdown
      */
-    public function __construct(string $title,string $markdown)
+    public function __construct(string $title, string $markdown)
     {
-        $this->setMessage($title,$markdown);
+        $this->setMessage($title, $markdown);
     }
 
     /**
      * @param string $title
      * @param string $markdown
      */
-    public function setMessage(string $title,string $markdown){
-        $this->message  = [
+    public function setMessage(string $title, string $markdown)
+    {
+        $this->message = [
             'msgtype' => 'markdown',
             'markdown' => [
                 'title' => $title,

@@ -21,18 +21,15 @@ abstract class Message
     }
 
     /**
-     * @param array $mobiles
-     * @param bool $atAll
      * @return array
      */
-    protected function makeAt(array $mobiles = [], bool $atAll = false): array
+    public function getBody(): array
     {
-        return [
-            'at' => [
-                'atMobiles' => $mobiles,
-                'isAtAll' => $atAll
-            ]
-        ];
+
+        if (empty($this->at)) {
+            $this->sendAt();
+        }
+        return $this->message + $this->at;
     }
 
     /**
@@ -47,15 +44,18 @@ abstract class Message
     }
 
     /**
+     * @param array $mobiles
+     * @param bool $atAll
      * @return array
      */
-    public function getBody(): array
+    protected function makeAt(array $mobiles = [], bool $atAll = false): array
     {
-
-        if (empty($this->at)) {
-            $this->sendAt();
-        }
-        return $this->message + $this->at;
+        return [
+            'at' => [
+                'atMobiles' => $mobiles,
+                'isAtAll' => $atAll
+            ]
+        ];
     }
 
 }

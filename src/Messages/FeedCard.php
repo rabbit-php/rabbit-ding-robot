@@ -54,12 +54,12 @@ class FeedCard extends Message
     }
 
     /**
-     * @return bool
+     *
      */
-    public function send(): bool
+    public function send(): void
     {
         $this->service->setMessage($this);
-        return $this->service->send();
+        $this->service->send();
     }
 
 }
