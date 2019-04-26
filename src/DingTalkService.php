@@ -160,7 +160,7 @@ class DingTalkService
     public function send(): void
     {
         if (!$this->config['enabled']) {
-            return false;
+            return;
         }
 
         CoroHelper::go(function () {
