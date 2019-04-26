@@ -1,0 +1,24 @@
+{
+  "name": "rabbit/ding-robot",
+  "description": "rabbit ding-robot.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "albert",
+      "email": "63851587@qq.com"
+    }
+  ],
+  "require": {
+    "rabbit/framework": "dev-master",
+    "rabbit/httpclient": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "rabbit\\ding\\robot\\": "src/"
+    },
+    "files": [
+      "src/functions.php"
+    ]
+  }
+}
