@@ -49,7 +49,7 @@ class DingTalk
 
     /**
      * @param string $content
-     * @return string
+     * @throws \Exception
      */
     public function text(string $content = ''): void
     {
@@ -61,7 +61,7 @@ class DingTalk
     /**
      * @param string $title
      * @param string $text
-     * @return Message
+     * @return ActionCard
      */
     public function action(string $title, string $text): ActionCard
     {
@@ -86,6 +86,7 @@ class DingTalk
      * @param string $text
      * @param string $url
      * @param string $picUrl
+     * @throws \Exception
      */
     public function link(string $title, string $text, string $url, string $picUrl = ''): void
     {
@@ -97,6 +98,7 @@ class DingTalk
     /**
      * @param string $title
      * @param string $markdown
+     * @throws \Exception
      */
     public function markdown(string $title, string $markdown): void
     {
