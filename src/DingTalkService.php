@@ -48,12 +48,16 @@ class DingTalkService
      * DingTalkService constructor.
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(array $config, array $options = [])
     {
         $this->config = $config;
         $this->setTextMessage('null');
         $this->setAccessToken();
-        $this->client = getDI('httpclient');
+        $this->client = Saber::create(array_merge([
+            'use_pool' => false,
+            'timeout' => 3,
+            'retry_time' => 3
+        ], $options));
     }
 
     /**
