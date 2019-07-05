@@ -10,7 +10,7 @@ use rabbit\ding\robot\Messages\Markdown;
 use rabbit\ding\robot\Messages\Message;
 use rabbit\ding\robot\Messages\Text;
 use rabbit\helper\CoroHelper;
-use rabbit\httpclient\Client;
+use Swlib\Saber;
 
 /**
  * Class DingTalkService
@@ -41,7 +41,7 @@ class DingTalkService
      * @var bool
      */
     protected $atAll = false;
-    /** @var Client */
+    /** @var Saber */
     protected $client;
 
     /**
@@ -137,8 +137,12 @@ class DingTalkService
      * @param int $btnOrientation
      * @return ActionCard
      */
-    public function setActionCardMessage(string $title, string $markdown, int $hideAvatar = 0, int $btnOrientation = 0): ActionCard
-    {
+    public function setActionCardMessage(
+        string $title,
+        string $markdown,
+        int $hideAvatar = 0,
+        int $btnOrientation = 0
+    ): ActionCard {
         $this->message = new ActionCard($this, $title, $markdown, $hideAvatar, $btnOrientation);
         $this->message->sendAt($this->mobiles, $this->atAll);
         return $this->message;
@@ -164,8 +168,7 @@ class DingTalkService
         }
 
         CoroHelper::go(function () {
-            $request = $this->client->post($this->getRobotUrl(), [
-                'body' => json_encode($this->message->getBody()),
+            $request = $this->client->post($this->getRobotUrl(), $this->message->getBody(), [
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
