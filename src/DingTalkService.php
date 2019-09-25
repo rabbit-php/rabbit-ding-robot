@@ -178,7 +178,9 @@ class DingTalkService
             ]);
             $client->post($parsed['path'] . isset($parsed['query']) ? "?{$parsed['query']}" : '',
                 $this->message->getBody());
-            return (string)$client->getBody();
+            $body = (string)$client->getBody();
+            $client->close();
+            return $body;
         });
     }
 
