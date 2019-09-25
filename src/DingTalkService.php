@@ -2,6 +2,7 @@
 
 namespace rabbit\ding\robot;
 
+use Co\Http\Client;
 use Exception;
 use rabbit\ding\robot\Messages\ActionCard;
 use rabbit\ding\robot\Messages\FeedCard;
@@ -9,8 +10,6 @@ use rabbit\ding\robot\Messages\Link;
 use rabbit\ding\robot\Messages\Markdown;
 use rabbit\ding\robot\Messages\Message;
 use rabbit\ding\robot\Messages\Text;
-use rabbit\helper\CoroHelper;
-use Swlib\Saber;
 
 /**
  * Class DingTalkService
@@ -41,8 +40,6 @@ class DingTalkService
      * @var bool
      */
     protected $atAll = false;
-    /** @var Saber */
-    protected $client;
 
     /**
      * DingTalkService constructor.
@@ -53,11 +50,6 @@ class DingTalkService
         $this->config = $config;
         $this->setTextMessage('null');
         $this->setAccessToken();
-        $this->client = Saber::create(array_merge([
-            'use_pool' => false,
-            'timeout' => 3,
-            'retry_time' => 3
-        ], $options));
     }
 
     /**
@@ -171,16 +163,22 @@ class DingTalkService
             return;
         }
 
-        CoroHelper::go(function () {
-            $request = $this->client->post($this->getRobotUrl(), $this->message->getBody(), [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                ],
-                'timeout' => $this->config['timeout'] ?? 2.0,
+        rgo(function () {
+            $parsed = parse_url($this->getRobotUrl());
+            if (!isset($parsed['path'])) {
+                $parsed['path'] = '/';
+            }
+            $client = new Client($parsed['host'], 443, true);
+            $client->set([
+                'keep_alive' => true,
+                'timeout' => $this->config['timeout']
             ]);
-
-            $result = (string)$request->getBody();
-            return $result;
+            $client->setHeaders([
+                'Content-Type' => 'application/json',
+            ]);
+            $client->post($parsed['path'] . isset($parsed['query']) ? "?{$parsed['query']}" : '',
+                $this->message->getBody());
+            return (string)$client->getBody();
         });
     }
 
