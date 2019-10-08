@@ -170,13 +170,13 @@ class DingTalkService
             }
             $client = new Client($parsed['host'], 443, true);
             $client->set([
-                'keep_alive' => true,
                 'timeout' => $this->config['timeout']
             ]);
             $client->setHeaders([
                 'Content-Type' => 'application/json',
             ]);
-            $client->post($parsed['path'] . isset($parsed['query']) ? "?{$parsed['query']}" : '',
+            $path = $parsed['path'] . (isset($parsed['query']) ? "?{$parsed['query']}" : '');
+            $client->post($path,
                 $this->message->getBody());
             $body = (string)$client->getBody();
             $client->close();
