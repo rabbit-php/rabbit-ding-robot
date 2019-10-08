@@ -176,8 +176,7 @@ class DingTalkService
                 'Content-Type' => 'application/json',
             ]);
             $path = $parsed['path'] . (isset($parsed['query']) ? "?{$parsed['query']}" : '');
-            $client->post($path,
-                $this->message->getBody());
+            $client->post($path, json_encode($this->message->getBody(), JSON_UNESCAPED_UNICODE));
             $body = (string)$client->getBody();
             $client->close();
             return $body;
