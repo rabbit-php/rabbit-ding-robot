@@ -128,5 +128,4 @@ class DingTalk
         return $this->dingTalkService
             ->setFeedCardMessage();
     }
-
 }

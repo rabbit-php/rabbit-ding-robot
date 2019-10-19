@@ -81,5 +81,4 @@ class ActionCard extends Message
         $this->service->setMessage($this);
         $this->service->send();
     }
-
 }

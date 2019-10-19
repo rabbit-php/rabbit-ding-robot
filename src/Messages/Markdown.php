@@ -1,6 +1,7 @@
 <?php
 
 namespace rabbit\ding\robot\Messages;
+
 /**
  * Class Markdown
  * @package rabbit\ding\robot\Messages
@@ -31,5 +32,4 @@ class Markdown extends Message
             ]
         ];
     }
-
 }

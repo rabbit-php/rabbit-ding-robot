@@ -1,6 +1,7 @@
 <?php
 
 namespace rabbit\ding\robot\Messages;
+
 /**
  * Class Link
  * @package rabbit\ding\robot\Messages

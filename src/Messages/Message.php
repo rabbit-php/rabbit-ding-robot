@@ -1,6 +1,7 @@
 <?php
 
 namespace rabbit\ding\robot\Messages;
+
 /**
  * Class Message
  * @package rabbit\ding\robot\Messages
@@ -25,7 +26,6 @@ abstract class Message
      */
     public function getBody(): array
     {
-
         if (empty($this->at)) {
             $this->sendAt();
         }
@@ -57,5 +57,4 @@ abstract class Message
             ]
         ];
     }
-
 }

@@ -21,7 +21,6 @@ class FeedCard extends Message
     {
         $this->service = $service;
         $this->setMessage();
-
     }
 
     /**
@@ -61,5 +60,4 @@ class FeedCard extends Message
         $this->service->setMessage($this);
         $this->service->send();
     }
-
 }

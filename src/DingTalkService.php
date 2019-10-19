@@ -190,5 +190,4 @@ class DingTalkService
     {
         return $this->hookUrl . "?access_token={$this->accessToken}";
     }
-
 }

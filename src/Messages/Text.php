@@ -1,6 +1,7 @@
 <?php
 
 namespace rabbit\ding\robot\Messages;
+
 /**
  * Class Text
  * @package rabbit\ding\robot\Messages
@@ -20,5 +21,4 @@ class Text extends Message
             ]
         ];
     }
-
 }
