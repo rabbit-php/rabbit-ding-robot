@@ -10,6 +10,7 @@ use rabbit\ding\robot\Messages\Link;
 use rabbit\ding\robot\Messages\Markdown;
 use rabbit\ding\robot\Messages\Message;
 use rabbit\ding\robot\Messages\Text;
+use rabbit\helper\ArrayHelper;
 
 /**
  * Class DingTalkService
@@ -93,7 +94,7 @@ class DingTalkService
      */
     public function setAt(array $mobiles = [], bool $atAll = false): void
     {
-        $this->mobiles = $mobiles;
+        $this->mobiles = empty($mobiles) ?  ArrayHelper::getValue($this->config, 'at', []): $mobiles;
         $this->atAll = $atAll;
         if ($this->message) {
             $this->message->sendAt($mobiles, $atAll);
@@ -138,7 +139,8 @@ class DingTalkService
         string $markdown,
         int $hideAvatar = 0,
         int $btnOrientation = 0
-    ): ActionCard {
+    ): ActionCard
+    {
         $this->message = new ActionCard($this, $title, $markdown, $hideAvatar, $btnOrientation);
         $this->message->sendAt($this->mobiles, $this->atAll);
         return $this->message;
