@@ -27,6 +27,10 @@ class DingTalkService
     /**
      * @var string
      */
+    protected $accessSecret = "";
+    /**
+     * @var string
+     */
     protected $hookUrl = "https://oapi.dingtalk.com/robot/send";
 
     /**
@@ -51,6 +55,7 @@ class DingTalkService
         $this->config = $config;
         $this->setTextMessage('null');
         $this->setAccessToken();
+        $this->setAccessSecret();
     }
 
     /**
@@ -70,6 +75,14 @@ class DingTalkService
     public function setAccessToken(): void
     {
         $this->accessToken = $this->config['token'];
+    }
+
+    /**
+     *
+     */
+    public function setAccessSecret(): void
+    {
+        $this->accessSecret = $this->config['secret'] ?? '';
     }
 
     /**
@@ -94,7 +107,7 @@ class DingTalkService
      */
     public function setAt(array $mobiles = [], bool $atAll = false): void
     {
-        $this->mobiles = empty($mobiles) ?  ArrayHelper::getValue($this->config, 'at', []): $mobiles;
+        $this->mobiles = empty($mobiles) ? ArrayHelper::getValue($this->config, 'at', []) : $mobiles;
         $this->atAll = $atAll;
         if ($this->message) {
             $this->message->sendAt($mobiles, $atAll);
@@ -185,11 +198,26 @@ class DingTalkService
         });
     }
 
+    public function getSign()
+    {
+        $t = time() * 1000;
+        $ts = $t . "\n" . $this->accessSecret;
+        $sig = hash_hmac('sha256', $ts, $this->accessSecret, true);
+        $sig = base64_encode($sig);
+        $sig = urlencode($sig);
+        return [$t, $sig];
+    }
+
     /**
      * @return string
      */
     public function getRobotUrl(): string
     {
-        return $this->hookUrl . "?access_token={$this->accessToken}";
+        $url = $this->hookUrl . "?access_token={$this->accessToken}";
+        if (!empty($this->accessSecret)) {
+            [$times, $sign] = $this->getSign();
+            $url .= "&timestamp={$times}&sign={$sign}";
+        }
+        return $url;
     }
 }
