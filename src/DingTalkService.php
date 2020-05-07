@@ -4,6 +4,7 @@ namespace rabbit\ding\robot;
 
 use Co\Http\Client;
 use Exception;
+use rabbit\App;
 use rabbit\ding\robot\Messages\ActionCard;
 use rabbit\ding\robot\Messages\FeedCard;
 use rabbit\ding\robot\Messages\Link;
@@ -145,18 +146,18 @@ class DingTalkService
      * @param string $markdown
      * @param int $hideAvatar
      * @param int $btnOrientation
-     * @return ActionCard
+     * @return DingTalkService
      */
     public function setActionCardMessage(
         string $title,
         string $markdown,
         int $hideAvatar = 0,
         int $btnOrientation = 0
-    ): ActionCard
+    ): DingTalkService
     {
         $this->message = new ActionCard($this, $title, $markdown, $hideAvatar, $btnOrientation);
         $this->message->sendAt($this->mobiles, $this->atAll);
-        return $this->message;
+        return $this;
     }
 
     /**
@@ -166,7 +167,7 @@ class DingTalkService
     {
         $this->message = new FeedCard($this);
         $this->message->sendAt($this->mobiles, $this->atAll);
-        return $this->message;
+        return $this;
     }
 
     /**

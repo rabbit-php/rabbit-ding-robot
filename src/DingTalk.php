@@ -112,12 +112,12 @@ class DingTalk
      * @param string $markdown
      * @param int $hideAvatar
      * @param int $btnOrientation
-     * @return ActionCard|Messages\Message
      */
-    public function actionCard(string $title, string $markdown, int $hideAvatar = 0, int $btnOrientation = 0): ActionCard
+    public function actionCard(string $title, string $markdown, int $hideAvatar = 0, int $btnOrientation = 0): void
     {
-        return $this->dingTalkService
-            ->setActionCardMessage($title, $markdown, $hideAvatar, $btnOrientation);
+        $this->dingTalkService
+            ->setActionCardMessage($title, $markdown, $hideAvatar, $btnOrientation)
+            ->send();
     }
 
     /**
