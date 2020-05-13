@@ -151,11 +151,12 @@ class DingTalkService
     public function setActionCardMessage(
         string $title,
         string $markdown,
-        int $hideAvatar = 0,
-        int $btnOrientation = 0
+        string $singleTitle = '',
+        int $btnOrientation = 0,
+        string $singleURL = ''
     ): DingTalkService
     {
-        $this->message = new ActionCard($this, $title, $markdown, $hideAvatar, $btnOrientation);
+        $this->message = new ActionCard($this, $title, $markdown, $singleTitle, $btnOrientation, $singleURL);
         $this->message->sendAt($this->mobiles, $this->atAll);
         return $this;
     }

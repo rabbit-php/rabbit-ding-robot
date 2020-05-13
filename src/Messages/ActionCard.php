@@ -21,27 +21,29 @@ class ActionCard extends Message
      * @param int $hideAvatar
      * @param int $btnOrientation
      */
-    public function __construct(DingTalkService $service, string $title, string $markdown, int $hideAvatar = 0, int $btnOrientation = 0)
+    public function __construct(DingTalkService $service, string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL='')
     {
         $this->service = $service;
-        $this->setMessage($title, $markdown, $hideAvatar, $btnOrientation);
+        $this->setMessage($title, $markdown, $singleTitle, $btnOrientation, $singleURL);
     }
 
     /**
      * @param string $title
      * @param string $markdown
-     * @param int $hideAvatar
+     * @param string $singleTitle
      * @param int $btnOrientation
+     * @param string $singleURL
      */
-    public function setMessage(string $title, string $markdown, int $hideAvatar = 0, int $btnOrientation = 0)
+    public function setMessage(string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL='')
     {
         $this->message = [
             'msgtype' => 'actionCard',
             'actionCard' => [
                 'title' => $title,
                 'text' => $markdown,
-                'hideAvatar' => $hideAvatar,
-                'btnOrientation' => $btnOrientation
+                'btnOrientation' => $btnOrientation,
+                'singleTitle' => $singleTitle,
+                'singleURL' => $singleURL,
             ]
         ];
     }
