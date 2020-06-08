@@ -19,5 +19,8 @@
     "files": [
       "src/functions.php"
     ]
+  },
+  "suggest": {
+    "mingyoung/dingtalk": "Support to use Ding Talk SDK"
   }
 }
