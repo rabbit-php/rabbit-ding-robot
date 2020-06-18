@@ -66,8 +66,7 @@ class DingTalkService
     public function setTextMessage(string $content): self
     {
         $this->message = new Text($content);
-        $this->message->sendAt($this->mobiles, $this->atAll);
-        $this->clean();
+        $this->dealAt();
         return $this;
     }
 
@@ -126,8 +125,7 @@ class DingTalkService
     public function setLinkMessage(string $title, string $text, string $messageUrl, string $picUrl = ''): self
     {
         $this->message = new Link($title, $text, $messageUrl, $picUrl);
-        $this->message->sendAt($this->mobiles, $this->atAll);
-        $this->clean();
+        $this->dealAt();
         return $this;
     }
 
@@ -139,8 +137,8 @@ class DingTalkService
     public function setMarkdownMessage(string $title, string $markdown): self
     {
         $this->message = new Markdown($title, $markdown);
-        $this->message->sendAt($this->mobiles, $this->atAll);
-        $this->clean();
+
+        $this->dealAt();
         return $this;
     }
 
@@ -160,8 +158,7 @@ class DingTalkService
     ): DingTalkService
     {
         $this->message = new ActionCard($this, $title, $markdown, $singleTitle, $btnOrientation, $singleURL);
-        $this->message->sendAt($this->mobiles, $this->atAll);
-        $this->clean();
+        $this->dealAt();
         return $this;
     }
 
@@ -171,8 +168,7 @@ class DingTalkService
     public function setFeedCardMessage(): FeedCard
     {
         $this->message = new FeedCard($this);
-        $this->message->sendAt($this->mobiles, $this->atAll);
-        $this->clean();
+        $this->dealAt();
         return $this;
     }
 
@@ -228,8 +224,9 @@ class DingTalkService
         return $url;
     }
 
-    public function clean(): void
+    public function dealAt(): void
     {
+        $this->message->sendAt($this->mobiles, $this->atAll);
         $this->atAll = false;
         $this->mobiles = [];
     }
