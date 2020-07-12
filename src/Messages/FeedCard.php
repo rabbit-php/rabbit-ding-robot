@@ -1,6 +1,6 @@
 <?php
 
-namespace rabbit\ding\robot\Messages;
+namespace Rabbit\Ding\Robot\Messages;
 
 use rabbit\ding\robot\DingTalkService;
 

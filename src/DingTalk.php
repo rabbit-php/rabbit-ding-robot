@@ -1,13 +1,13 @@
 <?php
 
-namespace rabbit\ding\robot;
+namespace Rabbit\Ding\Robot;
 
-use rabbit\ding\robot\Messages\ActionCard;
-use rabbit\ding\robot\Messages\FeedCard;
+use Exception;
+use Rabbit\Ding\Robot\Messages\ActionCard;
 
 /**
  * Class DingTalk
- * @package rabbit\ding\robot
+ * @package Rabbit\Ding\Robot
  */
 class DingTalk
 {
@@ -15,15 +15,15 @@ class DingTalk
     /**
      * @var array
      */
-    protected $config;
+    protected array $config;
     /**
      * @var string
      */
-    protected $robot = 'default';
+    protected string $robot = 'default';
     /**
      * @var DingTalkService
      */
-    protected $dingTalkService;
+    protected DingTalkService $dingTalkService;
 
     /**
      * DingTalk constructor.
@@ -49,24 +49,21 @@ class DingTalk
 
     /**
      * @param string $content
-     * @throws \Exception
+     * @throws Exception
      */
     public function text(string $content = ''): void
     {
-        $this->dingTalkService
-            ->setTextMessage($content)
-            ->send();
+        $this->dingTalkService->setTextMessage($content)->send();
     }
 
     /**
      * @param string $title
      * @param string $text
-     * @return ActionCard
+     * @return DingTalkService
      */
-    public function action(string $title, string $text): ActionCard
+    public function action(string $title, string $text): DingTalkService
     {
-        return $this->dingTalkService
-            ->setActionCardMessage($title, $text);
+        return $this->dingTalkService->setActionCardMessage($title, $text);
     }
 
     /**
@@ -76,8 +73,7 @@ class DingTalk
      */
     public function at(array $mobiles = [], bool $atAll = false): self
     {
-        $this->dingTalkService
-            ->setAt($mobiles, $atAll);
+        $this->dingTalkService->setAt($mobiles, $atAll);
         return $this;
     }
 
@@ -86,46 +82,41 @@ class DingTalk
      * @param string $text
      * @param string $url
      * @param string $picUrl
-     * @throws \Exception
+     * @throws Exception
      */
     public function link(string $title, string $text, string $url, string $picUrl = ''): void
     {
-        $this->dingTalkService
-            ->setLinkMessage($title, $text, $url, $picUrl)
-            ->send();
+        $this->dingTalkService->setLinkMessage($title, $text, $url, $picUrl)->send();
     }
 
     /**
      * @param string $title
      * @param string $markdown
-     * @throws \Exception
+     * @throws Exception
      */
     public function markdown(string $title, string $markdown): void
     {
-        $this->dingTalkService
-            ->setMarkdownMessage($title, $markdown)
-            ->send();
+        $this->dingTalkService->setMarkdownMessage($title, $markdown)->send();
     }
 
     /**
      * @param string $title
      * @param string $markdown
-     * @param int $hideAvatar
+     * @param string $singleTitle
      * @param int $btnOrientation
+     * @param string $singleURL
+     * @throws Exception
      */
     public function actionCard(string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL = ''): void
     {
-        $this->dingTalkService
-            ->setActionCardMessage($title, $markdown, $singleTitle, $btnOrientation, $singleURL)
-            ->send();
+        $this->dingTalkService->setActionCardMessage($title, $markdown, $singleTitle, $btnOrientation, $singleURL)->send();
     }
 
     /**
-     * @return FeedCard
+     * @return DingTalkService
      */
-    public function feed(): FeedCard
+    public function feed(): DingTalkService
     {
-        return $this->dingTalkService
-            ->setFeedCardMessage();
+        return $this->dingTalkService->setFeedCardMessage();
     }
 }

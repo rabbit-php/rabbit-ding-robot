@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace rabbit\ding\robot;
+namespace Rabbit\Ding\Robot;
 
 /**
  * Class FileConfig
- * @package rabbit\ding\robot
+ * @package Rabbit\Ding\Robot
  */
 class FileConfig implements IConfig
 {
-    protected $config;
+    protected array $config;
 
     public function __construct(array $config)
     {

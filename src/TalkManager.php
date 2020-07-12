@@ -1,19 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace rabbit\ding\robot;
+namespace Rabbit\Ding\Robot;
 
 use EasyDingTalk\Application;
-use rabbit\core\Exception;
+use Rabbit\Base\Core\Exception;
 
 /**
  * Class TalkManager
- * @package rabbit\ding\robot
+ * @package Rabbit\Ding\Robot
  */
 class TalkManager
 {
     /** @var array */
-    protected $apps = [];
+    protected array $apps = [];
 
     /**
      * TalkManager constructor.
@@ -39,8 +39,9 @@ class TalkManager
     /**
      * @param string $name
      * @return Application|null
+     * @throws Exception
      */
-    public function getApp(string $name): Application
+    public function getApp(string $name): ?Application
     {
         if (isset($this->apps[$name])) {
             return $this->apps[$name];

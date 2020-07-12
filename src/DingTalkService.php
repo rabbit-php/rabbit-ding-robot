@@ -1,57 +1,57 @@
 <?php
+declare(strict_types=1);
 
-namespace rabbit\ding\robot;
+namespace Rabbit\Ding\Robot;
 
 use Co\Http\Client;
 use Exception;
-use rabbit\App;
-use rabbit\ding\robot\Messages\ActionCard;
-use rabbit\ding\robot\Messages\FeedCard;
-use rabbit\ding\robot\Messages\Link;
-use rabbit\ding\robot\Messages\Markdown;
-use rabbit\ding\robot\Messages\Message;
-use rabbit\ding\robot\Messages\Text;
-use rabbit\helper\ArrayHelper;
+use Rabbit\Base\Helper\ArrayHelper;
+use Rabbit\Ding\Robot\Messages\ActionCard;
+use Rabbit\Ding\Robot\Messages\FeedCard;
+use Rabbit\Ding\Robot\Messages\Link;
+use Rabbit\Ding\Robot\Messages\Markdown;
+use Rabbit\Ding\Robot\Messages\Message;
+use Rabbit\Ding\Robot\Messages\Text;
 
 /**
  * Class DingTalkService
- * @package rabbit\ding\robot
+ * @package Rabbit\Ding\Robot
  */
 class DingTalkService
 {
     /** @var array */
-    protected $config;
+    protected array $config;
     /**
      * @var string
      */
-    protected $accessToken = "";
+    protected string $accessToken = "";
     /**
      * @var string
      */
-    protected $accessSecret = "";
+    protected string $accessSecret = "";
     /**
      * @var string
      */
-    protected $hookUrl = "https://oapi.dingtalk.com/robot/send";
+    protected string $hookUrl = "https://oapi.dingtalk.com/robot/send";
 
     /**
      * @var Message
      */
-    protected $message;
+    protected Message $message;
     /**
      * @var array
      */
-    protected $mobiles = [];
+    protected array $mobiles = [];
     /**
      * @var bool
      */
-    protected $atAll = false;
+    protected bool $atAll = false;
 
     /**
      * DingTalkService constructor.
      * @param array $config
      */
-    public function __construct(array $config, array $options = [])
+    public function __construct(array $config)
     {
         $this->config = $config;
         $this->setTextMessage('null');
@@ -108,7 +108,7 @@ class DingTalkService
      */
     public function setAt(array $mobiles = [], bool $atAll = false): void
     {
-        $this->mobiles = empty($mobiles) ? ArrayHelper::getValue($this->config, 'at', []) : $mobiles;
+        $this->mobiles = empty($mobiles) ? (array)ArrayHelper::getValue($this->config, 'at', []) : $mobiles;
         $this->atAll = $atAll;
         if ($this->message) {
             $this->message->sendAt($mobiles, $atAll);
@@ -145,8 +145,9 @@ class DingTalkService
     /**
      * @param string $title
      * @param string $markdown
-     * @param int $hideAvatar
+     * @param string $singleTitle
      * @param int $btnOrientation
+     * @param string $singleURL
      * @return DingTalkService
      */
     public function setActionCardMessage(
@@ -163,9 +164,9 @@ class DingTalkService
     }
 
     /**
-     * @return FeedCard
+     * @return DingTalkService
      */
-    public function setFeedCardMessage(): FeedCard
+    public function setFeedCardMessage(): self
     {
         $this->message = new FeedCard($this);
         $this->dealAt();
@@ -201,7 +202,7 @@ class DingTalkService
         });
     }
 
-    public function getSign()
+    public function getSign(): array
     {
         $t = time() * 1000;
         $ts = $t . "\n" . $this->accessSecret;

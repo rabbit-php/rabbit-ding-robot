@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace rabbit\ding\robot;
+namespace Rabbit\Ding\Robot;
 
 /**
  * Interface IConfig
- * @package rabbit\ding\robot
+ * @package Rabbit\Ding\Robot
  */
 interface IConfig
 {

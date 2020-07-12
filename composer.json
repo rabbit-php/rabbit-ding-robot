@@ -10,11 +10,19 @@
     }
   ],
   "require": {
-    "rabbit/framework": "^1.0"
+    "php": ">=7.4.0",
+    "ext-swoole": ">=4.5.0",
+    "rabbit/base": "dev-master",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "mingyoung/dingtalk": "^2",
+    "swoole/ide-helper": "@dev",
+    "phpunit/phpunit": "*"
   },
   "autoload": {
     "psr-4": {
-      "rabbit\\ding\\robot\\": "src/"
+      "Rabbit\\Ding\\Robot\\": "src/"
     },
     "files": [
       "src/functions.php"
