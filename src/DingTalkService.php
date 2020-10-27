@@ -1,17 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Ding\Robot;
 
-use Co\Http\Client;
 use Exception;
+use GuzzleHttp\Client;
 use Rabbit\Base\Helper\ArrayHelper;
-use Rabbit\Ding\Robot\Messages\ActionCard;
-use Rabbit\Ding\Robot\Messages\FeedCard;
 use Rabbit\Ding\Robot\Messages\Link;
-use Rabbit\Ding\Robot\Messages\Markdown;
-use Rabbit\Ding\Robot\Messages\Message;
 use Rabbit\Ding\Robot\Messages\Text;
+use Rabbit\Ding\Robot\Messages\Message;
+use Rabbit\Ding\Robot\Messages\FeedCard;
+use Rabbit\Ding\Robot\Messages\Markdown;
+use Rabbit\Ding\Robot\Messages\ActionCard;
 
 /**
  * Class DingTalkService
@@ -32,7 +33,7 @@ class DingTalkService
     /**
      * @var string
      */
-    protected string $hookUrl = "https://oapi.dingtalk.com/robot/send";
+    const HOOK_URL = "https://oapi.dingtalk.com/robot/send";
 
     /**
      * @var Message
@@ -47,6 +48,8 @@ class DingTalkService
      */
     protected bool $atAll = false;
 
+    protected Client $client;
+
     /**
      * DingTalkService constructor.
      * @param array $config
@@ -57,6 +60,7 @@ class DingTalkService
         $this->setTextMessage('null');
         $this->setAccessToken();
         $this->setAccessSecret();
+        $this->client = new Client();
     }
 
     /**
@@ -156,8 +160,7 @@ class DingTalkService
         string $singleTitle = '',
         int $btnOrientation = 0,
         string $singleURL = ''
-    ): DingTalkService
-    {
+    ): DingTalkService {
         $this->message = new ActionCard($this, $title, $markdown, $singleTitle, $btnOrientation, $singleURL);
         $this->dealAt();
         return $this;
@@ -183,22 +186,10 @@ class DingTalkService
         }
 
         rgo(function () {
-            $parsed = parse_url($this->getRobotUrl());
-            if (!isset($parsed['path'])) {
-                $parsed['path'] = '/';
-            }
-            $client = new Client($parsed['host'], 443, true);
-            $client->set([
+            $this->client->post($this->getRobotUrl(), [
+                'json' => $this->message->getBody(),
                 'timeout' => $this->config['timeout']
             ]);
-            $client->setHeaders([
-                'Content-Type' => 'application/json',
-            ]);
-            $path = $parsed['path'] . (isset($parsed['query']) ? "?{$parsed['query']}" : '');
-            $client->post($path, json_encode($this->message->getBody(), JSON_UNESCAPED_UNICODE));
-            $body = (string)$client->getBody();
-            $client->close();
-            return $body;
         });
     }
 
