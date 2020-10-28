@@ -2,7 +2,7 @@
 
 namespace Rabbit\Ding\Robot\Messages;
 
-use rabbit\ding\robot\DingTalkService;
+use Rabbit\Ding\Robot\DingTalkService;
 
 /**
  * Class ActionCard
@@ -21,7 +21,7 @@ class ActionCard extends Message
      * @param int $hideAvatar
      * @param int $btnOrientation
      */
-    public function __construct(DingTalkService $service, string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL='')
+    public function __construct(DingTalkService $service, string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL = '')
     {
         $this->service = $service;
         $this->setMessage($title, $markdown, $singleTitle, $btnOrientation, $singleURL);
@@ -34,7 +34,7 @@ class ActionCard extends Message
      * @param int $btnOrientation
      * @param string $singleURL
      */
-    public function setMessage(string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL='')
+    public function setMessage(string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL = '')
     {
         $this->message = [
             'msgtype' => 'actionCard',

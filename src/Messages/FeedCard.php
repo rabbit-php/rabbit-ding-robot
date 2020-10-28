@@ -2,7 +2,7 @@
 
 namespace Rabbit\Ding\Robot\Messages;
 
-use rabbit\ding\robot\DingTalkService;
+use Rabbit\Ding\Robot\DingTalkService;
 
 /**
  * Class FeedCard
