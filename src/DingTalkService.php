@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rabbit\Ding\Robot;
 
 use Exception;
-use GuzzleHttp\Client;
 use Rabbit\Base\Helper\ArrayHelper;
 use Rabbit\Ding\Robot\Messages\Link;
 use Rabbit\Ding\Robot\Messages\Text;
@@ -13,6 +12,7 @@ use Rabbit\Ding\Robot\Messages\Message;
 use Rabbit\Ding\Robot\Messages\FeedCard;
 use Rabbit\Ding\Robot\Messages\Markdown;
 use Rabbit\Ding\Robot\Messages\ActionCard;
+use Rabbit\HttpClient\Client;
 
 /**
  * Class DingTalkService
@@ -48,8 +48,6 @@ class DingTalkService
      */
     protected bool $atAll = false;
 
-    protected Client $client;
-
     /**
      * DingTalkService constructor.
      * @param array $config
@@ -60,7 +58,6 @@ class DingTalkService
         $this->setTextMessage('null');
         $this->setAccessToken();
         $this->setAccessSecret();
-        $this->client = new Client();
     }
 
     /**
@@ -186,7 +183,7 @@ class DingTalkService
         }
 
         rgo(function () {
-            $this->client->post($this->getRobotUrl(), [
+            (new Client())->post($this->getRobotUrl(), [
                 'json' => $this->message->getBody(),
                 'timeout' => $this->config['timeout']
             ]);
