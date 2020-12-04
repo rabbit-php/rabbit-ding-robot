@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Ding\Robot;
 
-use EasyDingTalk\Application;
 use Rabbit\Base\Core\Exception;
+use Rabbit\Ding\Robot\Talk\Application;
 
 /**
  * Class TalkManager

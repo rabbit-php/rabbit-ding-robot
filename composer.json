@@ -16,7 +16,6 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "mingyoung/dingtalk": "^2",
     "swoole/ide-helper": "@dev",
     "phpunit/phpunit": "*"
   },
@@ -27,8 +26,5 @@
     "files": [
       "src/functions.php"
     ]
-  },
-  "suggest": {
-    "mingyoung/dingtalk": "Support to use Ding Talk SDK"
   }
 }

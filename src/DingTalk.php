@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Rabbit\Ding\Robot;
 
 use Exception;
-use Rabbit\Ding\Robot\Messages\ActionCard;
 
 /**
  * Class DingTalk
