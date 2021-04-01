@@ -205,7 +205,7 @@ class DingTalkService
      */
     public function getRobotUrl(): string
     {
-        $url = $this->hookUrl . "?access_token={$this->accessToken}";
+        $url = self::HOOK_URL . "?access_token={$this->accessToken}";
         if (!empty($this->accessSecret)) {
             [$times, $sign] = $this->getSign();
             $url .= "&timestamp={$times}&sign={$sign}";

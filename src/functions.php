@@ -9,9 +9,9 @@ if (!function_exists('ding')) {
      * @return DingTalk|null
      * @throws Throwable
      */
-    function ding(): ?DingTalk
+    function ding(string $key = 'default'): ?DingTalk
     {
-        return getDI('ding.robot');
+        return getDI('ding.robot')->get($key);
     }
 }
 

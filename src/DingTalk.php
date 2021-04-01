@@ -12,15 +12,6 @@ use Exception;
  */
 class DingTalk
 {
-
-    /**
-     * @var array
-     */
-    protected array $config;
-    /**
-     * @var string
-     */
-    protected string $robot = 'default';
     /**
      * @var DingTalkService
      */
@@ -32,21 +23,8 @@ class DingTalk
      */
     public function __construct(array $config)
     {
-        $this->config = $config;
-        $this->with();
+        $this->dingTalkService = new DingTalkService($config);
     }
-
-    /**
-     * @param string $robot
-     * @return DingTalk
-     */
-    public function with(string $robot = 'default'): self
-    {
-        $this->robot = $robot;
-        $this->dingTalkService = new DingTalkService($this->config[$robot]);
-        return $this;
-    }
-
 
     /**
      * @param string $content
