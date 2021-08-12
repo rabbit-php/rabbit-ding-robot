@@ -1,40 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Rabbit\Ding\Robot\Messages;
 
 use Rabbit\Ding\Robot\DingTalkService;
 
-/**
- * Class ActionCard
- * @package rabbit\ding\robot\Messages
- */
 class ActionCard extends Message
 {
-    /** @var DingTalkService */
-    protected $service;
+    protected DingTalkService $service;
 
-    /**
-     * ActionCard constructor.
-     * @param DingTalkService $service
-     * @param string $title
-     * @param string $markdown
-     * @param int $hideAvatar
-     * @param int $btnOrientation
-     */
     public function __construct(DingTalkService $service, string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL = '')
     {
         $this->service = $service;
         $this->setMessage($title, $markdown, $singleTitle, $btnOrientation, $singleURL);
     }
 
-    /**
-     * @param string $title
-     * @param string $markdown
-     * @param string $singleTitle
-     * @param int $btnOrientation
-     * @param string $singleURL
-     */
-    public function setMessage(string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL = '')
+    public function setMessage(string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL = ''): void
     {
         $this->message = [
             'msgtype' => 'actionCard',
@@ -48,11 +30,6 @@ class ActionCard extends Message
         ];
     }
 
-    /**
-     * @param string $title
-     * @param string $url
-     * @return ActionCard
-     */
     public function single(string $title, string $url): self
     {
         $this->message['actionCard']['singleTitle'] = $title;
@@ -61,11 +38,6 @@ class ActionCard extends Message
         return $this;
     }
 
-    /**
-     * @param string $title
-     * @param string $url
-     * @return ActionCard
-     */
     public function addButtons(string $title, string $url): self
     {
         $this->message['actionCard']['btns'][] = [
@@ -75,9 +47,6 @@ class ActionCard extends Message
         return $this;
     }
 
-    /**
-     *
-     */
     public function send(): void
     {
         $this->service->setMessage($this);

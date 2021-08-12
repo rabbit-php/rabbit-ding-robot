@@ -1,31 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Rabbit\Ding\Robot\Messages;
 
 use Rabbit\Ding\Robot\DingTalkService;
 
-/**
- * Class FeedCard
- * @package rabbit\ding\robot\Messages
- */
 class FeedCard extends Message
 {
-    /** @var DingTalkService */
-    protected $service;
+    protected DingTalkService $service;
 
-    /**
-     * FeedCard constructor.
-     * @param DingTalkService $service
-     */
     public function __construct(DingTalkService $service)
     {
         $this->service = $service;
         $this->setMessage();
     }
 
-    /**
-     *
-     */
     public function setMessage(): void
     {
         $this->message = [
@@ -36,12 +26,6 @@ class FeedCard extends Message
         ];
     }
 
-    /**
-     * @param string $title
-     * @param string $messageUrl
-     * @param string $picUrl
-     * @return FeedCard
-     */
     public function addLinks(string $title, string $messageUrl, string $picUrl): self
     {
         $this->message['feedCard']['links'][] = [
@@ -52,9 +36,6 @@ class FeedCard extends Message
         return $this;
     }
 
-    /**
-     *
-     */
     public function send(): void
     {
         $this->service->setMessage($this);

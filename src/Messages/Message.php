@@ -2,28 +2,18 @@
 
 namespace Rabbit\Ding\Robot\Messages;
 
-/**
- * Class Message
- * @package rabbit\ding\robot\Messages
- */
+use Rabbit\Ding\Robot\DingTalkService;
+
 abstract class Message
 {
-    /** @var array */
-    protected $message = [];
-    /** @var array */
-    protected $at;
+    protected array $message = [];
+    protected array $at;
 
-    /**
-     * @return array
-     */
     public function getMessage(): array
     {
         return $this->message;
     }
 
-    /**
-     * @return array
-     */
     public function getBody(): array
     {
         if (empty($this->at)) {
@@ -32,22 +22,12 @@ abstract class Message
         return $this->message + $this->at;
     }
 
-    /**
-     * @param array $mobiles
-     * @param bool $atAll
-     * @return $this
-     */
     public function sendAt(array $mobiles = [], bool $atAll = false): self
     {
         $this->at = $this->makeAt($mobiles, $atAll);
         return $this;
     }
 
-    /**
-     * @param array $mobiles
-     * @param bool $atAll
-     * @return array
-     */
     protected function makeAt(array $mobiles = [], bool $atAll = false): array
     {
         return [
