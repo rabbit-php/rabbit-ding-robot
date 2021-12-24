@@ -44,7 +44,8 @@ abstract class BaseClient
 
     public function getAccessToken(): string
     {
-        if (null !== $token = $this->cache->get($this->cacheKey)) {
+        $token = $this->cache->get($this->cacheKey);
+        if (is_string($token) && strlen($token) > 0) {
             return $token;
         }
         $response = (new Client(self::$httpConfig))->get('gettoken', ['query' => [
