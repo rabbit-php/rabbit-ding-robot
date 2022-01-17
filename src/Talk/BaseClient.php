@@ -16,15 +16,13 @@ abstract class BaseClient
 
     protected Cache $cache;
 
-    protected Application $app;
-
     protected ?string $cacheKey = null;
 
     protected static $httpConfig = [
         'base_uri' => 'https://oapi.dingtalk.com',
     ];
 
-    public function __construct(Application $app, array $options = [])
+    public function __construct(protected Application $app, array $options = [])
     {
         $this->client = new Client($options + self::$httpConfig + [
             'before' => function (RequestInterface $request) {
@@ -37,7 +35,6 @@ abstract class BaseClient
                 }
             }
         ]);
-        $this->app = $app;
         $this->cache = getDI('cache');
         $this->cacheKey = sprintf('access_token.%s', $app->config['app_key']);
     }

@@ -6,16 +6,13 @@ namespace Rabbit\Ding\Robot\Talk;
 
 class Application
 {
-    public array $config = [];
-
     protected array $services = [
         'department' => Department::class,
         'user' => User::class
     ];
 
-    public function __construct(array $config)
+    public function __construct(public readonly array $config)
     {
-        $this->config = $config;
         foreach ($this->services as $name => $service) {
             $this->services[$name] = create($service, ['app' => $this]);
         }

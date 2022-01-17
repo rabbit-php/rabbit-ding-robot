@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Ding\Robot;
@@ -9,11 +10,8 @@ namespace Rabbit\Ding\Robot;
  */
 class FileConfig implements IConfig
 {
-    protected array $config;
-
-    public function __construct(array $config)
+    public function __construct(protected array $config)
     {
-        $this->config = $config;
     }
 
     /**
@@ -31,5 +29,4 @@ class FileConfig implements IConfig
     {
         $this->config = $config;
     }
-
 }

@@ -8,11 +8,8 @@ use Rabbit\Ding\Robot\DingTalkService;
 
 class FeedCard extends Message
 {
-    protected DingTalkService $service;
-
-    public function __construct(DingTalkService $service)
+    public function __construct(protected DingTalkService $service)
     {
-        $this->service = $service;
         $this->setMessage();
     }
 

@@ -8,11 +8,8 @@ use Rabbit\Ding\Robot\DingTalkService;
 
 class ActionCard extends Message
 {
-    protected DingTalkService $service;
-
-    public function __construct(DingTalkService $service, string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL = '')
+    public function __construct(protected DingTalkService $service, string $title, string $markdown, string $singleTitle = '', int $btnOrientation = 0, $singleURL = '')
     {
-        $this->service = $service;
         $this->setMessage($title, $markdown, $singleTitle, $btnOrientation, $singleURL);
     }
 

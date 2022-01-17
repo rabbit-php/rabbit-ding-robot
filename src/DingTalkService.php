@@ -20,8 +20,6 @@ use Rabbit\HttpClient\Client;
  */
 class DingTalkService
 {
-    /** @var array */
-    protected array $config;
     /**
      * @var string
      */
@@ -52,9 +50,8 @@ class DingTalkService
      * DingTalkService constructor.
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(protected array $config)
     {
-        $this->config = $config;
         $this->setTextMessage('null');
         $this->setAccessToken();
         $this->setAccessSecret();
