@@ -46,6 +46,8 @@ class DingTalkService
      */
     protected bool $atAll = false;
 
+    protected Client $client;
+
     /**
      * DingTalkService constructor.
      * @param array $config
@@ -55,6 +57,7 @@ class DingTalkService
         $this->setTextMessage('null');
         $this->setAccessToken();
         $this->setAccessSecret();
+        $this->client = new Client(['use_pool' => true]);
     }
 
     /**
@@ -179,8 +182,8 @@ class DingTalkService
             return;
         }
 
-        rgo(function () {
-            (new Client())->post($this->getRobotUrl(), [
+        rgo(function (): void {
+            $this->client->post($this->getRobotUrl(), [
                 'json' => $this->message->getBody(),
                 'timeout' => $this->config['timeout']
             ]);

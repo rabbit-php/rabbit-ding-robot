@@ -25,7 +25,7 @@ abstract class BaseClient
     public function __construct(protected Application $app, array $options = [])
     {
         $this->client = new Client($options + self::$httpConfig + [
-            'before' => function (RequestInterface $request) {
+            'before' => function (RequestInterface $request): ?RequestInterface {
                 parse_str($request->getUri()->getQuery(), $query);
                 $request = $request->withUri(
                     $request->getUri()->withQuery(http_build_query(['access_token' => $this->getAccessToken()] + $query))
