@@ -11,13 +11,13 @@ if (!function_exists('ding')) {
      */
     function ding(string $key = 'default'): ?DingTalk
     {
-        return getDI('ding.robot')->get($key);
+        return service('ding.robot')->get($key);
     }
 }
 
 if (!function_exists('talk')) {
     function talk(string $name = 'default'): ?Application
     {
-        return getDI('ding.talk')->getApp($name);
+        return service('ding.talk')->getApp($name);
     }
 }

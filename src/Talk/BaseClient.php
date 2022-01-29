@@ -35,7 +35,7 @@ abstract class BaseClient
                 }
             }
         ]);
-        $this->cache = getDI('cache');
+        $this->cache = service('cache');
         $this->cacheKey = sprintf('access_token.%s', $app->config['app_key']);
     }
 
