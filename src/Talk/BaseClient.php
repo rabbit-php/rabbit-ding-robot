@@ -33,6 +33,7 @@ abstract class BaseClient
                 if ($request instanceof Request) {
                     return $request;
                 }
+                return null;
             }
         ]);
         $this->cache = service('cache');
